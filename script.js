@@ -49,4 +49,73 @@ function taskElementChanger() {
   });
 }
 
-//
+//implement remove all button
+const buttonRemoveAll = document.getElementById('apaga-tudo');
+buttonRemoveAll.addEventListener('click', function () {
+  taskList.innerHTML = '';
+  updateList();
+});
+
+//implement remove completed button
+const buttonRemoveCompleted = document.getElementById('remover-finalizados');
+buttonRemoveCompleted.addEventListener('click', function () {
+  taskListElements.forEach((element) => {
+    if (element.classList.contains('completed')) {
+      element.remove();
+    }
+  });
+  updateList();
+});
+
+//implement save list button
+const buttonSaveList = document.getElementById('salvar-tarefas');
+buttonSaveList.addEventListener('click', function () {
+  localStorage.setItem('taskList', taskList.innerHTML);
+});
+
+//load list from local storage
+window.onload = function () {
+  taskList.innerHTML = localStorage.getItem('taskList');
+  updateList();
+  taskElementChanger();
+}
+
+//implement move up button
+const buttonMoveUp = document.getElementById('mover-cima');
+buttonMoveUp.addEventListener('click', function () {
+  taskListElements.forEach((element) => {
+    if (element.style.backgroundColor === 'gray') {
+      if (element.previousElementSibling) {
+        taskList.insertBefore(element, element.previousElementSibling);
+      }
+    }
+  });
+  updateList();
+  taskElementChanger();
+});
+
+//implement move down button
+const buttonMoveDown = document.getElementById('mover-baixo');
+buttonMoveDown.addEventListener('click', function () {
+  taskListElements.forEach((element) => {
+    if (element.style.backgroundColor === 'gray') {
+      if (element.nextElementSibling) {
+        taskList.insertBefore(element.nextElementSibling, element);
+      }
+    }
+  });
+  updateList();
+  taskElementChanger();
+});
+
+//implement remove selected button
+const buttonRemoveSelected = document.getElementById('remover-selecionado');
+buttonRemoveSelected.addEventListener('click', function () {
+  taskListElements.forEach((element) => {
+    if (element.style.backgroundColor === 'gray') {
+      element.remove();
+    }
+  });
+  updateList();
+  taskElementChanger();
+});
